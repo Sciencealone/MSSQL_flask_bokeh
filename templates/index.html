@@ -2,14 +2,39 @@
 <html>
 <head>
 <title>Simple table</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
-<script src="{{ url_for('static', filename='js/jquery-1.12.4.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='DataTables/datatables.min.css') }}">
+<script src="{{ url_for('static', filename='DataTables/datatables.min.js') }}"></script>
+<style type="text/css">
+ body {font:80%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif}
+</style>
 </head>
 
 <script>
 $(document).ready(function() {
-    $('#example').DataTable();
+    var table = $('#example').DataTable({
+    buttons: ['csv', 'excel'],
+	initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        }
+});
+table.buttons().container().appendTo('body');
 });
 </script>
 

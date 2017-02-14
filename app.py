@@ -26,12 +26,21 @@ def show_index():
     html = re.sub(' example', '" id = "example', html)
     html = re.sub(' style="text-align: right;"', '', html)
     
-    # Prepare a fake footer for the select boxes
     soup = BeautifulSoup(html, "lxml")
+    
+    # Remove the tbody tag
+    soup.tbody.extract() 
+    
+    # Prepare a fake footer for the select boxes
     thead = str(soup.find('thead').findChildren()[0])
-    html = re.sub(r'</thead>', r'</thead><tfoot>' + thead + '</tfoot>', html)
+    html = re.sub(r'</thead>', r'</thead><tfoot>' + thead + '</tfoot>', str(soup))
     
     return render_template('index.html', table = html)
+
+@app.route('/get_data')
+def get_data():
+    json = df.to_json(orient = "values")
+    return '{"data":' + json + '}'
 
 if __name__ == "__main__":
     

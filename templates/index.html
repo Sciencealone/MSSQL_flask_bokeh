@@ -13,6 +13,10 @@
 $(document).ready(function() {
     var table = $('#example').DataTable({
     buttons: ['csv', 'excel'],
+	"processing": true,
+	"serverSide": false,
+	"deferRender": true,
+	"ajax": {url: 'get_data'},
 	initComplete: function () {
             this.api().columns().every( function () {
                 var column = this;

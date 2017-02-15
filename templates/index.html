@@ -12,7 +12,8 @@
 <script>
 $(document).ready(function() {
     var table = $('#example').DataTable({
-    buttons: ['csv', 'excel'],
+    dom: 'Bfrtip',
+	buttons: ['csv', 'excel'],
 	"processing": true,
 	"serverSide": false,
 	"deferRender": true,
@@ -38,7 +39,6 @@ $(document).ready(function() {
             } );
         }
 });
-table.buttons().container().appendTo('body');
 });
 </script>
 

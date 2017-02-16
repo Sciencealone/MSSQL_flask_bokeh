@@ -553,7 +553,7 @@ function _excelColWidth( data, col ) {
 		}
 	}
 
-	max *= 1.3;
+	max *= 1.6;
 
 	// And a min width
 	return max > 6 ? max : 6;
@@ -1147,7 +1147,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				attr: {
 					min: i+1,
 					max: i+1,
-					width: _excelColWidth( data, i ),
+					width: 40,//_excelColWidth( data, i ),
 					customWidth: 1
 				}
 			} ) );
